@@ -1,0 +1,34 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "make current problem",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "p=${fileBasenameNoExtension}"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "run current binary",
+            "type": "shell",
+            "command": "${workspaceFolder}/Problems/${fileBasenameNoExtension}/build/Debug/${fileBasenameNoExtension}.o",
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
+        },
+        {
+            "label": "build and run current",
+            "dependsOn": [
+                "make current problem",
+                "run current binary"
+            ],
+            "dependsOrder": "sequence"
+        }
+    ]
+}
