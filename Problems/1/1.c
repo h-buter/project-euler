@@ -1,16 +1,14 @@
 #include <stdio.h>  
+#include "../common.h"
 
 const int max = 1000;
 int total = 0;
 int multiples[] = {3,5};
 
-char problemNumber[] = __FILE_NAME__;
-
 
 int main() 
 {  
-    printf("Problem number %c: Multiples of 3 or 5\n", problemNumber[0]);
-    
+    printProblemNumber(__FILE_NAME__);
     for (int i = 1; i <= max-1; i++) // Loop over all values minus 1 because of "under x"
     {
         for (unsigned long j = 0; j < sizeof(multiples) / sizeof(multiples[0]); j++) // Loop over all multiple checks with a second for loop for the amount of multiples
@@ -19,7 +17,7 @@ int main()
             {
                 // printf("i: %i, j: %li, multiples: %i\n", i, j, multiples[j]);
                 total += i; // Sum the values
-                break; // Break the multiples for loop other wise doubles, for example mod of 3 and 5 are both true for 15, so skip checking the other modulos when one is true
+                break; // Break the multiples for loop other wise doubles, for example mod of 3 and 5 are both true for 15, so skip checking the other modulo's when one is true
             }
         }
     }
