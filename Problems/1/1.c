@@ -1,3 +1,4 @@
+//https://projecteuler.net/problem=1
 #include <stdio.h>  
 #include "../common.h"
 
@@ -8,7 +9,7 @@ int multiples[] = {3,5};
 
 int main() 
 {  
-    printProblemNumber(__FILE_NAME__);
+    printProblemNumber(__FILE_NAME__, "Multiples of 3 or 5");
     for (int i = 1; i <= max-1; i++) // Loop over all values minus 1 because of "under x"
     {
         for (unsigned long j = 0; j < sizeof(multiples) / sizeof(multiples[0]); j++) // Loop over all multiple checks with a second for loop for the amount of multiples
