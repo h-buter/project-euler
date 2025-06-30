@@ -1,6 +1,6 @@
 #include <stdio.h>  
 
-void printProblemNumber(char fileName[])
+void printProblemNumber(char fileName[], char* problemName)
 {
-    printf("Problem number %c: Multiples of 3 or 5\n", fileName[0]);
+    printf("Problem number %c: %s\n", fileName[0], problemName);
 }

@@ -1,2 +1,2 @@
 
-void printProblemNumber(char fileName[]);
+void printProblemNumber(char fileName[], char* problemName);
