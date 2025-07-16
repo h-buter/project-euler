@@ -6,11 +6,17 @@
 #define PATH "./Problems/11/problemInput.txt"
 
 #define nDigits 2
-#define numberSize 20 * 20
+#define gridX 20
+#define gridY 20
 #define adjacentNumbers 4
 
+#define horz
+#define vert
+#define diagLeft
+#define diagRight
+
 FILE* getFile();
-void storeNumbers(int* p, int size, FILE* file);
+void storeNumbers(int p[gridX][gridY], int size, FILE* file);
 void storeBiggest(int x, int* p);
 
 int main() 
@@ -19,44 +25,88 @@ int main()
 
     FILE* file = getFile(); // Read in the file
 
-    int array[numberSize] = { 0 };
-    storeNumbers(array, numberSize, file); //Store the numbers of the file in a array
+    int array[gridX][gridY] = { 0 };
+    storeNumbers(array, gridX, file); //Store the numbers of the file in a array
 
-    // printf("\n\n\n\n\n\n");
-
-    // for(int x = 0; x < numberSize; x++)
-    // {
-    //     printf("%i ", array[x]);
-    // }
+    printf("\n\n\n");
 
     int biggest = 0;
 
-
     //Horizontal search
-    for(int i = 0; i < numberSize - adjacentNumbers; i++)
-    {
-        int x = array[i];
-        for(int j = 0; j < adjacentNumbers - 1; j++)
+    #ifdef horz
+    printf("horizontally\n");
+        for(int y = 0; y < gridY; y++)
         {
-            x *= array[i + 1 + j];
+            for(int x = 0; x < gridX - adjacentNumbers; x++)
+            {
+                unsigned long product = 1;
+                for(int i = 0; i < adjacentNumbers; i++)
+                {
+                    product *= array[x + i][y];
+                    // printf("[%i,%i]=%i * ", x + i, y, array[x+i][y]);
+                }
+                // printf(", p: %li \n", product);
+                storeBiggest(product, &biggest);
+            }
         }
-
-        storeBiggest(x, &biggest);
-
-    }
+    #endif
 
     //Vertical search
-    for(int i = 0; i < numberSize - adjacentNumbers; i++)
+    #ifdef vert
+    printf("Vertically\n");
+    for(int x = 0; x < gridX; x++)
     {
-        int x = array[i];
-        for(int j = 0; j < adjacentNumbers - 1; j++)
+        for(int y = 0; y < gridY - adjacentNumbers; y++)
         {
-            x *= array[i + 1 + j];
+            unsigned long product = 1;
+            for(int i = 0; i < adjacentNumbers; i++)
+            {
+                product *= array[x][y + i];
+                // printf("[%i,%i]=%i * ", x, y + i, array[x][y + i]);
+            }
+            // printf(", p: %li \n", product);
+            storeBiggest(product, &biggest);
         }
-
-        storeBiggest(x, &biggest);
-
     }
+    #endif
+
+    //Diagonally to the left search
+    #ifdef diagLeft
+    printf("Diagonally to the left\n");
+    for(int y = 0; y < gridY - adjacentNumbers + 1; y++)
+    {
+        for(int x = 0; x < gridX - adjacentNumbers + 1; x++)
+        {
+            unsigned long product = 1;
+            for(int i = 0; i < adjacentNumbers; i++)
+            {
+                product *= array[x + i][y + i];
+                // printf("[%i,%i]=%i * ", x + i, y + i, array[x + i][y + i]);
+            }
+            // printf(", p: %li \n", product);
+            storeBiggest(product, &biggest);
+        }
+    }
+    #endif
+
+    //Diagonally to the right search
+    #ifdef diagRight
+    printf("Diagonally to the right\n");
+    for(int y = 0; y < gridY - adjacentNumbers + 1; y++)
+    {
+        for(int x = gridX - 1; x - adjacentNumbers + 1 >= 0; x--)
+        {
+            unsigned long product = 1;
+            for(int i = 0; i < adjacentNumbers; i++)
+            {
+                product *= array[x - i][y + i];
+                // printf("[%i,%i]=%i * ", x - i, y + i, array[x - i][y + i]);
+            }
+            // printf(", p: %li \n", product);
+            storeBiggest(product, &biggest);
+        }
+    }
+    #endif
 
 
     printf("\n");
@@ -76,11 +126,12 @@ FILE* getFile()
     return p;
 }
 
-void storeNumbers(int* p, int size, FILE* file)
+void storeNumbers(int p[gridX][gridY], int size, FILE* file)
 {
     bool done = 0;
     char ch[nDigits] = {0};
-    int count = 0;
+    int x = 0;
+    int y = 0;
     while(!done)
     {
         for(int i = 0; i < nDigits; i++)
@@ -97,8 +148,13 @@ void storeNumbers(int* p, int size, FILE* file)
             int currentNumber = (ch[0] - '0') * 10 + (ch[1] - '0');
             printf ("%i ", currentNumber);
 
-            p[count] = currentNumber;
-            count++;
+            p[x][y] = currentNumber;
+            x++;
+            if(x >= gridX)
+            {
+                x = 0;
+                y++;
+            }
         }
     }
 }
