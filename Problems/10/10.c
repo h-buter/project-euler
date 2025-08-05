@@ -3,7 +3,7 @@
 #include "../common.h"
 #include <stdbool.h>
 
-bool checkPrime(unsigned long x);
+bool checkPrime(unsigned long x, unsigned long prevPrime);
 
 int maxPrimeSum = 2 * 10E5;
 
@@ -15,11 +15,13 @@ int main()
     unsigned long i = 1; //Current number to be checked if it is a prime
     int primeCount = 1; //Count the primes that have been found
     unsigned long primeSum = 2; // Other than 2 there is no even number that is a prime
+    unsigned long prevPrime = 1;
     while(i < maxPrimeSum) //Loop until the sum has been found
     {
         i = i + 2;
-        if(checkPrime(i))
+        if(checkPrime(i, prevPrime))
         {
+            prevPrime = i;
             primeSum += i;
             primeCount++;
             if(primeCount % (unsigned long)10000 == 0)
@@ -32,9 +34,9 @@ int main()
     printf("The sum of all primes below %i is: %li\n", maxPrimeSum, primeSum);
 }
 
-bool checkPrime(unsigned long x)
+bool checkPrime(unsigned long x, unsigned long prevPrime)
 {
-    for(unsigned long i = 2; i < x; i++)
+    for(unsigned long i = 2; i <= prevPrime; i++)
     {
         if(x % i == 0) //Check if the number is cleanly divisible by any number but it self and 1
         {
