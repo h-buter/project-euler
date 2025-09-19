@@ -29,6 +29,19 @@
                 "run current binary"
             ],
             "dependsOrder": "sequence"
+        },
+        {
+            "label": "make run current problem",
+            "type": "shell",
+            "command": "make",
+            "args": [
+                "p=${fileBasenameNoExtension}",
+                "run"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": []
         }
     ]
 }
