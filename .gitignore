@@ -4,3 +4,4 @@
 
 *.o
 **/build
+Problems/test/test.c

@@ -1,6 +1,8 @@
 #include <stdio.h>  
 #include <stdbool.h>
 #include <math.h>
+#include <stdlib.h>
+
 
 void printProblemNumber(char fileName[], char* problemName)
 {
@@ -27,4 +29,51 @@ void printProblemNumber(char fileName[], char* problemName)
     }
 
     printf("Problem number %i: %s\n", problemNumber, problemName);
+}
+
+
+unsigned long calcTotalDivisors(unsigned long n)
+{
+    int Sn = sqrt(n);
+    // printf("sqrt(%li) = %i. And %li has the following divisors: ", n, Sn, n);
+    // int* arr = (int*)malloc((Sn - 1) * sizeof(int));
+    // for (int j = 0; j <= Sn - 2; j++)
+    // {
+    //     printf("%i, ", arr[j]);
+    // }
+    // printf("\n");
+
+    int count = 0;
+    for (int i = 1; i <= Sn; i++)
+    {
+        if(!(n % i))
+        {
+            // arr[count] = i;
+            if(i != Sn)
+            {
+                // arr[Sn - 2 - count] = (int)(n/i);
+                count += 2;
+            }
+            else 
+            {
+                count ++;
+            }
+
+            
+            // printf("i = %i and n/i = %i; ", i, (int)(n/i));
+
+        }
+    }
+
+    // printf("\nDivisors: ");
+    // for (int j = 0; j <= Sn - 2; j++)
+    // {
+    //     printf("%i, ", arr[j]);
+    // }
+
+    // printf("\n");
+    // free(arr);
+    
+    return count;
+
 }
