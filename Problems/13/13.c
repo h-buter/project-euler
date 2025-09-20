@@ -26,16 +26,54 @@ int main()
     storeNumbers(array, numberSize, file); //Store the numbers of the file in a array
 
     printf("End of store numbers\n");
-    for (int j = 0; j < 1; j++)
+
+    int c[numberSize/digitsIndividualNumbers + 2] = {0};
+
+    // for (int j = 0; j < numberSize/digitsIndividualNumbers - 1; j++)
+    // printf("  "); // 2 spacing for longer result array
+    // for (int i = 0; i <= digitsIndividualNumbers - 1; i++)
+    // {
+    //     printf("%i", array[0][i]);
+    // }
+    // printf("\n");
+    // printf("  "); // 2 spacing for longer result array
+    // for (int i = 0; i <= digitsIndividualNumbers - 1; i++)
+    // {
+    //     printf("%i", array[1][i]);
+    // }
+    // printf("\n");
+    // printf("--"); // 2 spacing for longer result array
+    // for (int i = 0; i <= digitsIndividualNumbers - 1; i++)
+    // {
+    //     printf("-");
+    // }
+    // printf("+\n");
+    
+
+    for (int j = 0; j < 2 - 1; j++)
     {
-        unsigned long rowSum = 0;
-        for (int i = 0; i < digitsIndividualNumbers; i++)
+        for (int i = digitsIndividualNumbers - 1; i >= 0; i--)
         {
-            printf("a[%i] * 10^%i = %i * 10^%i = %li \n", i, digitsIndividualNumbers-i, array[j][i], digitsIndividualNumbers-i, (array[j][i] * (unsigned long)pow(10, digitsIndividualNumbers-i)));
-            rowSum += array[j][i] * pow(10, digitsIndividualNumbers-i);
+            int subSum = array[j][i] + c[i+2]; //+ array[j+1][i] ;
+            int temp = subSum;
+            int carry = 0;
+            
+            if(subSum >= 10)
+            {
+                carry = 1;
+                subSum -= 10;
+            }
+            
+            c[i+2-1] = carry;
+            // printf("a[%i] = %i, b[%i] = %i, c[%i] = %i, sum = %i, subSum = %i, carry = %i",  i, array[j][i], i, array[j+1][i], i, c[i+2],  temp, subSum, carry);
+            c[i+2] = subSum;
+            // printf(", result: c = %i\n", c[i+2]);
         }
-        printf("row sum of row %i = %li", j, rowSum);
-        printf("\n");
+    }
+
+    for (int i = 0; i <= digitsIndividualNumbers + 1; i++)
+    {
+        printf("%i", c[i]);
     }
     
 }
